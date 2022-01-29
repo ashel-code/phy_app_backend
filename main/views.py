@@ -25,7 +25,7 @@ class GetMessagesAPI(generics.ListCreateAPIView):
 
             return Response(serializer_for_queryset.data)
 
-class SendMessage(generics.ListCreateAPIView):
+class SendMessageAPI(generics.ListCreateAPIView):
     def post(self, request):
         final = self.request.GET.get('end_user')
         login = self.request.GET.get('login')
@@ -36,7 +36,13 @@ class SendMessage(generics.ListCreateAPIView):
         if hash == trueHash:
             serializer = MessagesSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            serializer.save(user=request)
+            serializer.save(message=request)
             return Response(status=status.HTTP_201_CREATED)
 
 
+class CreateUserAPI(generics.ListCreateAPIView):
+    def post(self, request):
+        serializer = UsersSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request)
+        return Response(status=status.HTTP_201_CREATED)

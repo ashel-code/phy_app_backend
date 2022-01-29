@@ -10,6 +10,7 @@ class Users(models.Model):
     status = models.IntegerField(default=0)
 
 class Messages(models.Model):
+    time = models.TimeField(auto_now=True)
     id = models.IntegerField(primary_key=True)
     text = models.CharField(max_length=16384)
     endUser = models.ForeignKey(Users, on_delete=models.CASCADE)
@@ -17,5 +18,4 @@ class Messages(models.Model):
 
     def __str__(self):
         return self.text
-
 
